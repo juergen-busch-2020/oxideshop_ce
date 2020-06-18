@@ -12,6 +12,7 @@ use oxField;
 use OxidEsales\Eshop\Core\Field;
 use OxidEsales\Eshop\Core\Registry;
 use OxidEsales\Eshop\Core\Str;
+use OxidEsales\EshopCommunity\Application\Controller\FrontendController;
 use oxList;
 
 // defining supported link types
@@ -2603,7 +2604,13 @@ class Article extends \OxidEsales\Eshop\Core\Model\MultiLanguageModel implements
      */
     public function getLongDesc()
     {
-        return \OxidEsales\Eshop\Core\Registry::getUtilsView()->parseThroughSmarty($this->getLongDescription()->getRawValue(), $this->getId() . $this->getLanguage(), null, true);
+        $activeView = oxNew(FrontendController::class);
+        $activeView->addGlobalParams();
+        $utilsView = Registry::getUtilsView();
+        return $utilsView->getRenderedContent(
+            $this->getLongDescription()->getRawValue(),
+            $activeView->getViewData(),
+            $this->getId() . $this->getLanguage());
     }
 
     /**
