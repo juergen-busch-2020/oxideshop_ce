@@ -52,19 +52,19 @@ class ModuleSmartyPluginDirectoriesTest extends TestCase
     {
         $templating = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
         $this->assertTrue(
-            $this->isPathInSmartyDirectories($templating, 'Smarty/PluginDirectory1WithMetadataVersion21')
+            $this->isPathInSmartyDirectories($templating->getTemplateEngine(), 'Smarty/PluginDirectory1WithMetadataVersion21')
         );
 
         $this->assertTrue(
-            $this->isPathInSmartyDirectories($templating, 'Smarty/PluginDirectory2WithMetadataVersion21')
+            $this->isPathInSmartyDirectories($templating->getTemplateEngine(), 'Smarty/PluginDirectory2WithMetadataVersion21')
         );
     }
 
     public function testSmartyPluginDirectoriesOrder()
     {
         $templating = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
-        $this->assertModuleSmartyPluginDirectoriesFirst($templating->getEngine()->plugins_dir);
-        $this->assertShopSmartyPluginDirectorySecond($templating->getEngine()->plugins_dir);
+        $this->assertModuleSmartyPluginDirectoriesFirst($templating->getTemplateEngine()->plugins_dir);
+        $this->assertShopSmartyPluginDirectorySecond($templating->getTemplateEngine()->plugins_dir);
     }
 
     /**

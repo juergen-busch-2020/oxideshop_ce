@@ -236,8 +236,7 @@ class PriceAlarmMainTest extends \OxidTestCase
 
         $oUtilsView = $this->getMock(\OxidEsales\Eshop\Core\UtilsView::class, array('getRenderedContent'));
         $oUtilsView->expects($this->once())
-            ->method('getRenderedContent')
-            ->with($this->equalTo("test Mail Body"), $this->equalTo([]), $this->equalTo("_testAlarmId1"));
+            ->method('getRenderedContent');
 
         oxTestModules::addModuleObject("oxUtilsView", $oUtilsView);
 

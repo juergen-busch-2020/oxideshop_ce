@@ -11,6 +11,7 @@ namespace OxidEsales\EshopCommunity\Tests\Unit\Internal\Transition\Smarty\Config
 
 use OxidEsales\EshopCommunity\Core\Registry;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Configuration\SmartySettingsDataProvider;
+use OxidEsales\EshopCommunity\Internal\Framework\Smarty\Extension\SmartyDefaultTemplateHandler;
 use OxidEsales\EshopCommunity\Internal\Framework\Smarty\SmartyContextInterface;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +30,7 @@ class SmartySettingsDataProviderTest extends TestCase
             'cache_dir' => 'testCompileDir',
             'template_dir' => ['testTemplateDir'],
             'compile_id' => '7f96e0d92070fd4733296e5118fd5a01',
-            'default_template_handler_func' => [Registry::getUtilsView(), '_smartyDefaultTemplateHandler'],
+            'default_template_handler_func' => [new SmartyDefaultTemplateHandler($smartyContextMock), 'handleTemplate'],
             'debugging' => true,
             'compile_check' => true,
             'php_handling' => 1,

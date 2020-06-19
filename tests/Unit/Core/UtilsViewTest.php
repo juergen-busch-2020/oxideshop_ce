@@ -348,6 +348,17 @@ class UtilsViewTest extends \OxidTestCase
         $this->assertSame($sExp, $oUV->getSmartyDir());
     }
 
+    private function assertArraySubset(array $subset, array $array): void
+    {
+        if ($array !== \array_replace_recursive($array, $subset)) {
+            $this->fail(sprintf(
+                "Failed asserting that %s has the subset %s",
+                \var_export($array, true),
+                \var_export($subset, true)
+            ));
+        }
+    }
+
     /**
      * @return array
      */

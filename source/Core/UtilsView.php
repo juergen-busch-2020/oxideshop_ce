@@ -28,15 +28,6 @@ use Smarty;
 class UtilsView extends \OxidEsales\Eshop\Core\Base
 {
     /**
-     * Template processor object (smarty)
-     *
-     * @deprecated since v6.4 (2019-10-10); Will be removed
-     *
-     * @var Smarty
-     */
-    protected static $_oSmarty = null;
-
-    /**
      * Templates directories array
      *
      * @var array
@@ -219,49 +210,6 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
     }
 
     /**
-     * Runs long description through smarty. If you pass array of data
-     * to process, array will be returned, if you pass string - string
-     * will be passed as result
-     *
-     * @deprecated since v6.4 (2019-10-10); Use getRenderedContent()
-     *
-     * @param mixed                                            $sDesc       description or array of descriptions
-     *                                                                      (array( [] => array(_ident_, _value_to_process_)))
-     * @param string                                           $sOxid       current object id
-     * @param \OxidEsales\Eshop\Core\Controller\BaseController $oActView    view data to use its view data (optional)
-     * @param bool                                             $blRecompile force to recompile if found in cache
-     *
-     * @return mixed
-     */
-    public function parseThroughSmarty($sDesc, $sOxid = null, $oActView = null, $blRecompile = false)
-    {
-        startProfile("parseThroughSmarty");
-
-        if (!is_array($sDesc) && strpos($sDesc, "[{") === false) {
-            stopProfile("parseThroughSmarty");
-
-            return $sDesc;
-        }
-
-        if (!$oActView) {
-            $oActView = oxNew(\OxidEsales\Eshop\Application\Controller\FrontendController::class);
-            $oActView->addGlobalParams();
-        }
-
-        if (is_array($sDesc)) {
-            foreach ($sDesc as $name => $aData) {
-                $result[$name] = $this->getRenderedContent($aData[1], $oActView->getViewData(), $sOxid);
-            }
-        } else {
-            $result = $this->getRenderedContent($sDesc, $oActView->getViewData(), $sOxid);
-        }
-
-        stopProfile("parseThroughSmarty");
-
-        return $result;
-    }
-
-    /**
      * Templates directory setter
      *
      * @param string $templatesDirectory templates path
@@ -359,33 +307,6 @@ class UtilsView extends \OxidEsales\Eshop\Core\Base
         return [
             $coreDirectory . 'Smarty/Plugin',
         ];
-    }
-
-    /**
-     * is called when a template cannot be obtained from its resource.
-     *
-     * @deprecated since v6.4 (2019-10-10); Use TemplateRendererBridgeInterface
-     *
-     * @param string $resourceType      template type
-     * @param string $resourceName      template file name
-     * @param string $resourceContent   template file content
-     * @param int    $resourceTimestamp template file timestamp
-     * @param object $smarty            template processor object (smarty)
-     *
-     * @return bool
-     */
-    public function _smartyDefaultTemplateHandler($resourceType, $resourceName, &$resourceContent, &$resourceTimestamp, $smarty) // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
-    {
-        $config = \OxidEsales\Eshop\Core\Registry::getConfig();
-        if ($resourceType == 'file' && !is_readable($resourceName)) {
-            $resourceName = $config->getTemplatePath($resourceName, $config->isAdmin());
-            $resourceContent = $smarty->_read_file($resourceName);
-            $resourceTimestamp = filemtime($resourceName);
-
-            return is_file($resourceName) && is_readable($resourceName);
-        }
-
-        return false;
     }
 
     /**
