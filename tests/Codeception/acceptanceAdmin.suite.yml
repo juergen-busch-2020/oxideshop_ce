@@ -37,3 +37,5 @@ modules:
         - \OxidEsales\Codeception\Module\Translation\TranslationsModule:
             shop_path: '%SHOP_SOURCE_PATH%'
             paths: 'Application/views/admin'
+        - \OxidEsales\Codeception\Module\OxideshopModules:
+
