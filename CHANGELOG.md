@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - Add module migrations
+- Add remove module configuration command
 
 ### Renamed
 - Price alert is renamed to wished price
