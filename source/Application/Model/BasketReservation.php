@@ -308,7 +308,7 @@ class BasketReservation extends \OxidEsales\Eshop\Core\Base
             $database->execute("delete from oxuserbaskets where oxid in (" . implode(",", $aFinished) . ")");
 
             // cleanup basket history also..
-            $database->execute("delete from oxuserbaskets where oxtitle = 'savedbasket' and oxupdate <= :startTime", [
+            $database->execute("delete from oxuserbaskets where oxtitle = 'reservations' and oxupdate <= :startTime", [
                 ':startTime' => $iStartTime
             ]);
 
